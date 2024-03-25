@@ -1,6 +1,7 @@
-import { getUser, getUsers } from "@/services/user-service";
+import { getUser, getUsers, getUsersBySchedule } from "@/services/user-service";
 
 export const userQueries = {
-  getUsers: () => getUsers(),
   getUser: (_: unknown, { id }: { id: string }) => getUser(id),
+  getUsers: () => getUsers(),
+  getUsersBySchedule: (_: unknown, { id }: { id: string }) => getUsersBySchedule(id),
 };

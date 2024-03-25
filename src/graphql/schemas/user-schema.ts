@@ -3,18 +3,16 @@ import gql from "graphql-tag";
 export const userTypeDefs = gql`
   type User {
     id: ID!
-    email: String!
-    password: String
-    image: String
+    name: String!
   }
 
   input UserRegisterInput {
-    email: String!
-    password: String!
+    name: String!
   }
 
   type Query {
     getUsers: [User]!
+    getUsersBySchedule(id: ID!): User
     getUser(id: ID!): User
   }
 

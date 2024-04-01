@@ -1,0 +1,27 @@
+mutation CreateSchedule($input: UserRegisterInput!) {
+  registerUser(input: $input) {
+    id
+    name
+  }
+}
+
+query GetUser($getUserId: ID!) {
+  getUser(id: $getUserId) {
+    id
+    name
+  }
+}
+
+query GetUsersBySchedule($getUsersByScheduleId: ID!) {
+  getUsersBySchedule(id: $getUsersByScheduleId) {
+    id
+    name
+  }
+}
+
+query GetUsersBySchedule {
+  getUsers {
+    id
+    name
+  }
+}

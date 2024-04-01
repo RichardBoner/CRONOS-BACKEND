@@ -4,6 +4,8 @@ export const userTypeDefs = gql`
   type User {
     id: ID!
     name: String!
+    schedules String[]
+    friends  String[]
   }
 
   input UserRegisterInput {

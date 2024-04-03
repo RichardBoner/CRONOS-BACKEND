@@ -1,5 +1,6 @@
-import { getGame } from "@/services/game-service";
+import { getGamesByQuery, getGameByIdService } from "@/services/game-service";
 
 export const gameQueries = {
-  getGame: (_: unknown, { id }: { id: string }) => getGame(id),
+  getGames: (_:unknown, {query}: {query: string}) => getGamesByQuery(query),
+  getGameById: (_:unknown, { id }: {id: string }) => getGameByIdService(id),
 };

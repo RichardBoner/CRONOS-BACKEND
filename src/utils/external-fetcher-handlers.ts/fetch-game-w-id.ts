@@ -15,4 +15,3 @@ export async function getGameById(id: number, slug?: string) {
       throw error;
     }
   }
-  

@@ -1,6 +1,16 @@
 import { prisma } from "@/utils/prisma";
 import { GraphQLError } from "graphql";
 import { nanoid } from "nanoid";
+import jwt from 'jsonwebtoken';
+
+interface PrismaCreateData {
+  name: string;
+  id: string;
+  password: string;
+  createdAt: string;
+  friends: string[];
+  schedules: string[];
+}
 
 export const getUser = async (id: string) => {
   try {
@@ -21,6 +31,13 @@ export const getUsers = async () => {
     throw new GraphQLError("Error fetching users");
   }
 };
+export const updateUser = async (input: {
+  payload: string
+}) => {
+  const key= 'AYEqnQcyGSM4'
+  const decodedPayload = jwt.decode(input.payload)
+  console.log(decodedPayload)
+}
 
 export const getUsersBySchedule = async (id: string) => {
   try {
@@ -35,14 +52,19 @@ export const getUsersBySchedule = async (id: string) => {
 }
 
 export const registerUser = async (input: {
-  name: string
+  payload: string
 }) => {
-  const name = input.name;
-  const id = nanoid();
-  const data = { id , name }
-  console.log(data)
+  const key = 'AYEqnQcyGSM4'
+  const decodedData= jwt.verify(input.payload, key)
   try {
-    const result = await prisma.user.create({ data });
+    const result = await prisma.user.create({ data: {
+      id: decodedData.id,
+      name: decodedData.name,
+      password: decodedData.password,
+      createdAt: decodedData.createdAt,
+      friends: [],
+      schedules: []
+    } });
     return result;
   } catch (error) {
     console.error(error);

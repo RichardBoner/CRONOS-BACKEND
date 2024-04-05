@@ -5,11 +5,16 @@ export const userTypeDefs = gql`
     id: ID!
     name: String!
     createdAt: String!
-    friends: [String]!
+    friends: [String]
+    schedules: [String]
   }
 
   input UserRegisterInput {
-    name: String!
+    payload: String!
+  }
+
+  input UserUpdateInput {
+    payload: String!
   }
 
   type Query {
@@ -18,7 +23,8 @@ export const userTypeDefs = gql`
   }
 
   type Mutation {
-    registerUser(input: UserRegisterInput!): User!
+    registerUser(input: UserRegisterInput!): String
     login(id: String!, password: String!): String
+    updateUser(input: UserUpdateInput): User!
   }
 `;

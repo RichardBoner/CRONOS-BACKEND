@@ -11,10 +11,12 @@ datasource db {
 }
 
 model User {
-  id       String   @id @default(nanoid()) @map("_id")
+  id       String    @id @map("_id")
   name     String
-  schedules String[]
+  password String
+  createdAt String
   friends  String[]
+  schedules String[]
 }
 
 model Schedule {

@@ -20,10 +20,11 @@ export const userTypeDefs = gql`
   type Query {
     getUsersBySchedule(id: ID!): User
     getUser(id: ID!): User
+    checkUser(id: ID!): Boolean!
   }
 
   type Mutation {
-    registerUser(input: UserRegisterInput!): String
+    registerUser(input: UserRegisterInput!): User
     login(id: String!, password: String!): String
     updateUser(input: UserUpdateInput): User!
   }

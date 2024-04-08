@@ -7,17 +7,20 @@
     "prebuild": "prisma generate",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "codegen": "bunx graphql-code-generator --config ./src/graphql/codegen.ts"
+    "lint": "next lint"
   },
   "dependencies": {
     "@apollo/server": "^4.10.1",
     "@as-integrations/next": "^3.0.0",
+    "@clerk/clerk-sdk-node": "^4.13.14",
     "@graphql-codegen/typescript-react-apollo": "^4.3.0",
     "@graphql-codegen/typescript-resolvers": "^4.0.6",
     "@prisma/client": "^5.11.0",
     "@types/jsonwebtoken": "^9.0.6",
+    "apollo-server-express": "^3.13.0",
     "axios": "^1.6.8",
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
     "graphql": "^16.8.1",
     "graphql-tag": "^2.12.6",
     "graphql-tools-merge-typedefs": "^2.0.1",

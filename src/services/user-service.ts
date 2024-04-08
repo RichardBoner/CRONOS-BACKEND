@@ -2,14 +2,15 @@ import { prisma } from "@/utils/prisma";
 import { GraphQLError } from "graphql";
 import { nanoid } from "nanoid";
 import jwt from 'jsonwebtoken';
-
-interface PrismaCreateData {
-  name: string;
-  id: string;
-  password: string;
-  createdAt: string;
-  friends: string[];
-  schedules: string[];
+declare module 'jsonwebtoken' {
+  export interface UserJwtPayload extends jwt.JwtPayload {
+    name: string;
+    id: string;
+    password: string;
+    createdAt: string;
+    friends: string[];
+    schedules: string[];
+}
 }
 
 export const getUser = async (id: string) => {
@@ -55,19 +56,30 @@ export const registerUser = async (input: {
   payload: string
 }) => {
   const key = 'AYEqnQcyGSM4'
-  const decodedData= jwt.verify(input.payload, key)
+  const decodedData= <jwt.UserJwtPayload>jwt.verify(input.payload, key)
+  // const processedData = {
+  //     id: decodedData.id,
+  //     name: decodedData.name,
+  //     password: decodedData.password,
+  //     createdAt: decodedData.createdAt,
+  //     friends: [], 
+  //     schedules: []
+  // }
   try {
-    const result = await prisma.user.create({ data: {
-      id: decodedData.id,
-      name: decodedData.name,
-      password: decodedData.password,
-      createdAt: decodedData.createdAt,
-      friends: [],
-      schedules: []
-    } });
+    const result = await prisma.user.create({ data: decodedData });
     return result;
   } catch (error) {
     console.error(error);
     throw new GraphQLError("Error creating user");
   }
 };
+export const checkUser = async (id: string) => {
+  try {
+    const result = await prisma.user.findUnique({ where: { id } });
+    if (result) return true;
+    return false
+  } catch (error) {
+    console.error(error);
+    throw new GraphQLError("Error fetching users");
+  }
+}

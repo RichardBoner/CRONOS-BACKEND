@@ -3,6 +3,7 @@ import gql from "graphql-tag";
 export const userTypeDefs = gql`
   type User {
     id: ID!
+    email: String!
     name: String!
     createdAt: String!
     friends: [String]
@@ -20,7 +21,6 @@ export const userTypeDefs = gql`
   type Query {
     getUsersBySchedule(id: ID!): User
     getUser(id: ID!): User
-    checkUser(id: ID!): Boolean!
   }
 
   type Mutation {

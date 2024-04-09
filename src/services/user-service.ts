@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 declare module 'jsonwebtoken' {
   export interface UserJwtPayload extends jwt.JwtPayload {
     name: string;
-    id: string;
+    email: string;
     password: string;
     createdAt: string;
     friends: string[];
@@ -57,14 +57,6 @@ export const registerUser = async (input: {
 }) => {
   const key = 'AYEqnQcyGSM4'
   const decodedData= <jwt.UserJwtPayload>jwt.verify(input.payload, key)
-  // const processedData = {
-  //     id: decodedData.id,
-  //     name: decodedData.name,
-  //     password: decodedData.password,
-  //     createdAt: decodedData.createdAt,
-  //     friends: [], 
-  //     schedules: []
-  // }
   try {
     const result = await prisma.user.create({ data: decodedData });
     return result;
@@ -73,13 +65,3 @@ export const registerUser = async (input: {
     throw new GraphQLError("Error creating user");
   }
 };
-export const checkUser = async (id: string) => {
-  try {
-    const result = await prisma.user.findUnique({ where: { id } });
-    if (result) return true;
-    return false
-  } catch (error) {
-    console.error(error);
-    throw new GraphQLError("Error fetching users");
-  }
-}

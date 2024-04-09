@@ -9,6 +9,7 @@ export async function getGameById(id: number, slug?: string) {
     const fullUrl = slug !== undefined && slug !== '' ? `${url}${slug}` : url;
     try {
       const game = await fetcher(fullUrl);
+      console.log(game)
       return game;
     } catch (error) {
       console.error(`Error fetching game with ID ${id}:`, error);

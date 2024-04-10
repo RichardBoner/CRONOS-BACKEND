@@ -1,7 +1,7 @@
 import { prisma } from "@/utils/prisma";
 import { GraphQLError } from "graphql";
 import { nanoid } from "nanoid";
-import jwt from 'jsonwebtoken';
+import jwt, { UserJwtPayload } from 'jsonwebtoken';
 declare module 'jsonwebtoken' {
   export interface UserJwtPayload extends jwt.JwtPayload {
     name: string;
@@ -57,8 +57,16 @@ export const registerUser = async (input: {
 }) => {
   const key = 'AYEqnQcyGSM4'
   const decodedData= <jwt.UserJwtPayload>jwt.verify(input.payload, key)
+  const userData = {
+    email: decodedData.email,
+    name: decodedData.name,
+    password: decodedData.password,
+    createdAt: decodedData.createdAt,
+    friends: [''],
+    schedules: ['']
+  }
   try {
-    const result = await prisma.user.create({ data: decodedData });
+    const result = await prisma.user.create({ data: userData });
     return result;
   } catch (error) {
     console.error(error);

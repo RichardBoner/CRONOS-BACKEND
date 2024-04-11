@@ -36,9 +36,7 @@ export const getGamesByQuery = async (query: string) => {
 export const getGameByIdService = async (id: string) => {
   try {
     const result = await getGameById(Number(id));
-    console.log(result)
     if (result){
-    console.log(result)
     return result;
     } else {
         console.error("game undefined or miising!")

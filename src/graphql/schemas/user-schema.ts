@@ -11,6 +11,11 @@ export const userTypeDefs = gql`
     schedules: [String]
   }
 
+  type SimpleUserData {
+    email: String!
+    name: String!
+  }
+
   input UserRegisterInput {
     payload: String!
   }
@@ -22,6 +27,7 @@ export const userTypeDefs = gql`
   type Query {
     getUsersBySchedule(id: ID!): User
     getUser(id: ID!): User
+    getUsersByEmail(name: String): [SimpleUserData]
   }
 
   type Mutation {

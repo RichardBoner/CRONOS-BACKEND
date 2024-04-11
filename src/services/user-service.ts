@@ -2,6 +2,13 @@ import { prisma } from "@/utils/prisma";
 import { GraphQLError } from "graphql";
 import { nanoid } from "nanoid";
 import jwt, { UserJwtPayload } from 'jsonwebtoken';
+import { User } from "@prisma/client";
+import { TranslatedUserInterface } from "@/types/interfaces/userInterfaces";
+
+function translateUsers(users: User[]): TranslatedUserInterface[] {
+  return users.map(({ email, name }) => ({ email, name }));
+}
+
 declare module 'jsonwebtoken' {
   export interface UserJwtPayload extends jwt.JwtPayload {
     name: string;
@@ -65,6 +72,7 @@ export const registerUser = async (input: {
     friends: [''],
     schedules: ['']
   }
+  console.log(userData);
   try {
     const result = await prisma.user.create({ data: userData });
     return result;
@@ -73,3 +81,18 @@ export const registerUser = async (input: {
     throw new GraphQLError("Error creating user");
   }
 };
+
+export const getUsersByEmail = async (name: string) => {
+  try {
+    const users = await prisma.user.findMany({ where: { name: {
+      contains: name,
+      mode: 'insensitive',
+      },}});
+    const mappedUsers = translateUsers(users);
+    console.log(mappedUsers);
+    return mappedUsers
+  } catch (error) {
+    console.error(error);
+    throw new GraphQLError("error Fetching Users By Email")
+  }
+}

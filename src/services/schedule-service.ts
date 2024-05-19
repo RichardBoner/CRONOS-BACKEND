@@ -3,7 +3,10 @@ import { GraphQLError } from "graphql";
 
 export const getSchedule = async (id: string) => {
   try {
-    const result = await prisma.schedule.findUnique({ where: { id } });
+    const result = await prisma.schedule.findMany({where: {
+    creatorUserId: id,
+  }, });
+    console.log (result)
     return result;
   } catch (error) {
     console.error(error);

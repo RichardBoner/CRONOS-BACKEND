@@ -19,7 +19,7 @@ export const scheduleTypeDefs = gql`
   }
 
   type Query {
-    getScheduleById(id: ID!): Schedule
+    getScheduleById(id: ID!): [Schedule]
   }
 
   type Mutation {

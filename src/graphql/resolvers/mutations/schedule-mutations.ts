@@ -5,7 +5,8 @@ export const scheduleMutations = {
     _: unknown,
     { input }: { input: {
         users: string[]
-        creatorUserId: string
+      creatorUserId: string
+        createdDate: string
         date: string
         duration: string
         gameId: string

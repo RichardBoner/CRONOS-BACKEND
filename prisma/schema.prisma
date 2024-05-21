@@ -24,6 +24,7 @@ model Schedule {
   id             String     @id @default(nanoid()) @map("_id")
   users          String[]
   creatorUserId  String
+  createdDate    String
   date           String
   duration       String
   gameId         String

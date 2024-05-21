@@ -16,7 +16,8 @@ export const getSchedule = async (id: string) => {
 
 export const createSchedule = async (input: {
     users: string[];
-    creatorUserId: string;
+  creatorUserId: string;
+  createdDate: string;
     date: string;
     duration: string;
     gameId: string;

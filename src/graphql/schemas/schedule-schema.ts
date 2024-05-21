@@ -13,6 +13,7 @@ export const scheduleTypeDefs = gql`
    input createScheduleInput {
     users: [String!]!
     creatorUserId: String!
+    createdDate: String!
     date: String!
     duration: String
     gameId: String!
